@@ -1,16 +1,11 @@
-# These owners will be the default owners for everything in the repo.
-*       @soham-trading-admin
+# Global Owners
+*       @soham-trading/security-board
 
-# Order is important; the last matching pattern takes the most precedence.
-# Frontend code
-*.js    @frontend-lead
-*.css   @frontend-lead
-*.html  @frontend-lead
+# Dev Ops & CI
+/.github/workflows/ @soham-trading/devops-team
+Dockerfile @soham-trading/devops-team
+docker-compose.yml @soham-trading/devops-team
+netlify.toml @soham-trading/devops-team
 
-# CI and Docker
-/.github/workflows/ @devops-lead
-Dockerfile @devops-lead
-docker-compose.yml @devops-lead
-
-# Documentation
-*.md @tech-writer
+# Legal & Compliance
+*.md @soham-trading/legal-compliance
