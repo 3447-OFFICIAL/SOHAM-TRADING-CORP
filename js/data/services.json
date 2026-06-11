@@ -1,0 +1,86 @@
+{
+  "solar": {
+      "title": "Solar EPC Solutions",
+      "desc": "End-to-end solar engineering, procurement, and construction services designed for high performance, maximum yield, and 25+ years of operational durability.",
+      "themeColor": "linear-gradient(135deg, #ffbe0b, #ff5400)",
+      "themeTextColor": "#ffbe0b",
+      "details": [
+          { "icon": "☀", "title": "Utility Scale Power Plants", "desc": "Large megawatt scale grid-connected ground mounted installations with automated smart tracking." },
+          { "icon": "🏢", "title": "Commercial & Industrial Rooftops", "desc": "Cost-reduction plants for factories, commercial towers, warehouses, and institutions." },
+          { "icon": "🏡", "title": "Residential Systems", "desc": "Grid-tied solar systems with premium net-metering and modern aesthetic integration." },
+          { "icon": "🔧", "title": "Operation & Maintenance (O&M)", "desc": "Thermal drone inspections, automated waterless cleaning, and real-time remote monitoring." }
+      ]
+  },
+  "ev": {
+      "title": "EV Charging Infrastructure",
+      "desc": "Empowering electric mobility with advanced charging systems, centralized fleet hubs, and certified safety-compliant installation networks.",
+      "themeColor": "linear-gradient(135deg, #00f5d4, #00bbf9)",
+      "themeTextColor": "#00f5d4",
+      "details": [
+          { "icon": "🔌", "title": "Commercial Charging Stations", "desc": "Dual gun AC and DC fast chargers integrated with seamless digital payment interfaces." },
+          { "icon": "🚚", "title": "Fleet Charging Solutions", "desc": "Dedicated high-current charging yards for electric logistics, buses, and corporate fleets." },
+          { "icon": "⚡", "title": "High-Speed DC Fast Chargers", "desc": "CCS2, CHAdeMO, and GB/T standard ultra-fast chargers from 30kW up to 240kW." },
+          { "icon": "📊", "title": "CMS Management Software", "desc": "Cloud-based tracking for station availability, energy utilization, and bill generation." }
+      ]
+  },
+  "ups": {
+      "title": "Industrial UPS & Power Backup",
+      "desc": "Complete uninterruptible power supply solutions built for critical operations, medical hubs, and advanced data center environments.",
+      "themeColor": "linear-gradient(135deg, #00d2ff, #7209b7)",
+      "themeTextColor": "#00d2ff",
+      "details": [
+          { "icon": "🔋", "title": "Industrial Grade UPS", "desc": "Heavy-duty modular online UPS with high power factor and input harmonic protection." },
+          { "icon": "🏢", "title": "Commercial Grade Backup", "desc": "Reliable power security systems for high-rise offices, retail grids, and smart infrastructure." },
+          { "icon": "🖥", "title": "Data Center Backup Systems", "desc": "N+1 and 2N redundant topologies ensuring 99.999% uptime with lithium-ion integration." },
+          { "icon": "⚙", "title": "Battery Management Systems", "desc": "Smart battery banks containing active cell balancing and real-time degradation diagnostics." }
+      ]
+  },
+  "stabilizer": {
+      "title": "Voltage Stabilizers (AVR)",
+      "desc": "Advanced electronic voltage regulation to safeguard high-precision CNC machinery, industrial medical units, and sensitive electrical grids.",
+      "themeColor": "linear-gradient(135deg, #00d2ff, #00f5d4)",
+      "themeTextColor": "#00d2ff",
+      "details": [
+          { "icon": "⚙", "title": "Servo Voltage Stabilizers", "desc": "Microprocessor-controlled copper-wound stabilizers with ultra-fast correction response." },
+          { "icon": "🏭", "title": "Industrial Heavy AVR", "desc": "Wide input range stabilizers designed for unbalanced three-phase industrial inputs." },
+          { "icon": "🛡", "title": "Spike & Surge Protection", "desc": "Class B & C lightning surge arresters and active filtering circuits to prevent transients." },
+          { "icon": "🔧", "title": "Custom Enclosures", "desc": "IP54 outdoor-rated designs with automated air ducting or oil-cooled setups." }
+      ]
+  },
+  "dg": {
+      "title": "Diesel Generator (DG) Solutions",
+      "desc": "Robust back-up power packages comprising generator supply, customized soundproof enclosures, and continuous AMCs.",
+      "themeColor": "linear-gradient(135deg, #ff5400, #ffbe0b)",
+      "themeTextColor": "#ff5400",
+      "details": [
+          { "icon": "🔥", "title": "Heavy Duty DG Sets", "desc": "Engine-driven generators starting from 5 kVA up to 3000 kVA configurations." },
+          { "icon": "🔇", "title": "Acoustic Enclosures", "desc": "CPCB-IV emission and noise level compliant structural acoustic canopies." },
+          { "icon": "🎛", "title": "AMF / Auto Transfer Panels", "desc": "Automated grid outage sensing with auto-start and load transfer within 8 seconds." },
+          { "icon": "📋", "title": "Annual Maintenance (AMC)", "desc": "Scheduled filtration cleaning, system inspections, and 24/7 technical callouts." }
+      ]
+  },
+  "pmc": {
+      "title": "Project Management Consultancy",
+      "desc": "Professional site supervision, budget optimizations, structural quality audits, and scheduling for infrastructure projects.",
+      "themeColor": "linear-gradient(135deg, #b5179e, #ff7096)",
+      "themeTextColor": "#ff7096",
+      "details": [
+          { "icon": "📋", "title": "Strategic Planning & Scheduling", "desc": "Critical path analysis, Primavera schedules, and complete resource leveling checks." },
+          { "icon": "👁", "title": "On-site Construction Supervision", "desc": "Continuous surveillance, milestone checks, and strict HSE safety protocol compliance." },
+          { "icon": "🔬", "title": "Quality Assurance Audits", "desc": "Detailed concrete testing, electrical insulation resistance tests, and hardware verification." },
+          { "icon": "💰", "title": "Cost & Billing Audits", "desc": "Contractor bill verification, change-order optimization, and budget tracking panels." }
+      ]
+  },
+  "infra": {
+      "title": "Electrical Infrastructure Solutions",
+      "desc": "Turnkey design and installation of HT/LT power distribution systems, high-tension cabling, and smart panel builds.",
+      "themeColor": "linear-gradient(135deg, #ff7096, #00d2ff)",
+      "themeTextColor": "#ff7096",
+      "details": [
+          { "icon": "🏭", "title": "HT / LT Panel Boards", "desc": "Main power distribution boards, motor control centers, and smart APFC panels." },
+          { "icon": "🔌", "title": "Cabling & Cable Trays", "desc": "Heavy armored copper/aluminum cabling layouts, structural cable tray designs, and duct runs." },
+          { "icon": "⚡", "title": "Power Quality Assessments", "desc": "Harmonic analysis, active power factor correction, and localized grid optimization." },
+          { "icon": "🚧", "title": "Substation Infrastructure", "desc": "Design and erection of compact substations, transformers, and ring main units." }
+      ]
+  }
+}
