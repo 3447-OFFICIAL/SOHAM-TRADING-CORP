@@ -1,4 +1,5 @@
 version: 2
+
 updates:
   - package-ecosystem: "npm"
     directory: "/"
@@ -7,30 +8,14 @@ updates:
       day: "monday"
       time: "09:00"
     open-pull-requests-limit: 10
-    reviewers:
-      - "security-team"
     labels:
       - "dependencies"
       - "security"
-    ignore:
-      - dependency-name: "eslint"
-        versions: ["< 9.0.0"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
-      day: "first"
-    reviewers:
-      - "devops-team"
     labels:
       - "ci"
-      - "dependencies"
-
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "docker"
       - "dependencies"
