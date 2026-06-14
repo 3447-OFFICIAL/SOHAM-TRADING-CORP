@@ -573,32 +573,51 @@
             
             <div class="portfolio-grid">
                 <!-- Project 1: Solar -->
-                <div class="project-card glass-panel" data-category="solar">
-                    <div class="project-img-container">
-                        <div class="project-img-placeholder" style="background-image: url('images/solar-project.webp');" aria-label="Solar Project Image" role="img" loading="lazy">
-                            <div class="project-img-overlay"></div>
+                <div class="project-card glass-panel" data-category="solar" id="solar-project-card">
+                    <!-- Collapsed view: keep exactly as it is -->
+                    <div class="project-card-collapsed">
+                        <div class="project-img-container">
+                            <div class="project-img-placeholder" style="background-image: url('images/solar-project.webp');" aria-label="Solar Project Image" role="img" loading="lazy">
+                                <div class="project-img-overlay"></div>
+                            </div>
+                            <span class="project-badge solar">Solar</span>
                         </div>
-                        <span class="project-badge solar">Solar</span>
+                        <div class="project-content">
+                            <h3 class="project-title">15MW Utility Grid Solar Park</h3>
+                            <div class="project-meta-grid">
+                                <div class="project-meta-item">
+                                    <span class="project-meta-label">Client</span>
+                                    <span class="project-meta-val">NTPC India</span>
+                                </div>
+                                <div class="project-meta-item">
+                                    <span class="project-meta-label">Capacity</span>
+                                    <span class="project-meta-val">15 MW Plant</span>
+                                </div>
+                                <div class="project-meta-item">
+                                    <span class="project-meta-label">Location</span>
+                                    <span class="project-meta-val">Rajasthan, IN</span>
+                                </div>
+                                <div class="project-meta-item">
+                                    <span class="project-meta-label">Date</span>
+                                    <span class="project-meta-val">March 2026</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-content">
-                        <h3 class="project-title">15MW Utility Grid Solar Park</h3>
-                        <div class="project-meta-grid">
-                            <div class="project-meta-item">
-                                <span class="project-meta-label">Client</span>
-                                <span class="project-meta-val">NTPC India</span>
-                            </div>
-                            <div class="project-meta-item">
-                                <span class="project-meta-label">Capacity</span>
-                                <span class="project-meta-val">15 MW Plant</span>
-                            </div>
-                            <div class="project-meta-item">
-                                <span class="project-meta-label">Location</span>
-                                <span class="project-meta-val">Rajasthan, IN</span>
-                            </div>
-                            <div class="project-meta-item">
-                                <span class="project-meta-label">Date</span>
-                                <span class="project-meta-val">March 2026</span>
-                            </div>
+                    <!-- Expanded view: containing categories and dynamic list -->
+                    <div class="project-card-expanded" style="display: none;">
+                        <div class="solar-expanded-header">
+                            <h3 class="solar-expanded-title">Solar EPC Solutions Portfolio</h3>
+                            <button class="btn-close-solar-expand" aria-label="Collapse Solar Portfolio">✕ Collapse</button>
+                        </div>
+                        <div class="solar-categories-tabs" role="tablist">
+                            <button class="solar-tab-btn active" data-tab="residential">Residential Projects</button>
+                            <button class="solar-tab-btn" data-tab="industrial">Industrial Projects</button>
+                            <button class="solar-tab-btn" data-tab="government">Government Projects</button>
+                            <button class="solar-tab-btn" data-tab="megawatt">Megawatt Scale Projects</button>
+                        </div>
+                        <div class="solar-projects-grid" id="solar-expanded-grid">
+                            <!-- Dynamic cards go here -->
                         </div>
                     </div>
                 </div>
@@ -1167,6 +1186,7 @@
     </footer>
 
     <!-- Main JavaScript Link -->
+    <script src="js/data/solar-projects.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

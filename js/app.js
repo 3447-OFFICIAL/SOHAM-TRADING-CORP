@@ -279,9 +279,136 @@ function initServiceModals() {
 /* ==========================================
    5. Portfolio Filtering Logic
    ========================================== */
+function renderSolarCategory(categoryName) {
+    const grid = document.getElementById('solar-expanded-grid');
+    if (!grid) return;
+
+    const projects = window.solarProjectsData[categoryName] || [];
+    grid.innerHTML = '';
+
+    projects.forEach(proj => {
+        // Build image slides HTML
+        let slidesHTML = '';
+        proj.images.forEach(imgUrl => {
+            slidesHTML += `<div class="solar-subproject-slide" style="background-image: url('${imgUrl}');"></div>`;
+        });
+
+        // Build navigation dots if multiple images
+        let dotsHTML = '';
+        if (proj.images.length > 1) {
+            dotsHTML = `<div class="solar-gallery-dots">`;
+            proj.images.forEach((_, idx) => {
+                dotsHTML += `<div class="solar-gallery-dot ${idx === 0 ? 'active' : ''}" data-index="${idx}"></div>`;
+            });
+            dotsHTML += `</div>`;
+        }
+
+        // Build navigation arrows if multiple images
+        let arrowsHTML = '';
+        if (proj.images.length > 1) {
+            arrowsHTML = `
+                <button class="solar-gallery-arrow prev" aria-label="Previous Photo">❮</button>
+                <button class="solar-gallery-arrow next" aria-label="Next Photo">❯</button>
+            `;
+        }
+
+        const projectHTML = `
+            <div class="solar-subproject-card" data-project-id="${proj.id}">
+                <div class="solar-subproject-img-container">
+                    <div class="solar-subproject-slides">
+                        ${slidesHTML}
+                    </div>
+                    ${arrowsHTML}
+                    ${dotsHTML}
+                </div>
+                <div class="solar-subproject-content">
+                    <div>
+                        <h4 class="solar-subproject-title">${proj.name}</h4>
+                        <p class="solar-subproject-desc">${proj.desc}</p>
+                    </div>
+                    <div class="solar-subproject-meta-grid">
+                        <div class="solar-subproject-meta-item">
+                            <span class="solar-subproject-meta-label">Client</span>
+                            <span class="solar-subproject-meta-val">${proj.client}</span>
+                        </div>
+                        <div class="solar-subproject-meta-item">
+                            <span class="solar-subproject-meta-label">Capacity</span>
+                            <span class="solar-subproject-meta-val">${proj.capacity}</span>
+                        </div>
+                        <div class="solar-subproject-meta-item">
+                            <span class="solar-subproject-meta-label">Location</span>
+                            <span class="solar-subproject-meta-val">${proj.location}</span>
+                        </div>
+                        <div class="solar-subproject-meta-item">
+                            <span class="solar-subproject-meta-label">Date</span>
+                            <span class="solar-subproject-meta-val">${proj.date}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        grid.insertAdjacentHTML('beforeend', projectHTML);
+    });
+
+    initSolarSlides();
+}
+
+function initSolarSlides() {
+    const cards = document.querySelectorAll('.solar-subproject-card');
+    cards.forEach(card => {
+        const slidesContainer = card.querySelector('.solar-subproject-slides');
+        if (!slidesContainer) return;
+
+        const slides = card.querySelectorAll('.solar-subproject-slide');
+        const dots = card.querySelectorAll('.solar-gallery-dot');
+        const prevBtn = card.querySelector('.solar-gallery-arrow.prev');
+        const nextBtn = card.querySelector('.solar-gallery-arrow.next');
+
+        if (slides.length <= 1) return;
+
+        let currentIndex = 0;
+
+        function updateSlider() {
+            slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, idx) => {
+                if (idx === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlider();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            });
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentIndex = parseInt(dot.getAttribute('data-index'), 10);
+                updateSlider();
+            });
+        });
+    });
+}
+
 function initPortfolio() {
     const filters = document.querySelectorAll('.filter-btn');
     const projects = document.querySelectorAll('.project-card');
+    const solarCard = document.getElementById('solar-project-card');
 
     filters.forEach(filter => {
         filter.addEventListener('click', () => {
@@ -300,8 +427,64 @@ function initPortfolio() {
                     project.classList.add('filtered-out');
                 }
             });
+
+            if (category !== 'all' && category !== 'solar') {
+                collapseSolarCard();
+            }
         });
     });
+
+    if (solarCard) {
+        const collapsedView = solarCard.querySelector('.project-card-collapsed');
+        const expandedView = solarCard.querySelector('.project-card-expanded');
+        const closeBtn = solarCard.querySelector('.btn-close-solar-expand');
+        const tabBtns = solarCard.querySelectorAll('.solar-tab-btn');
+
+        collapsedView.addEventListener('click', () => {
+            expandSolarCard();
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            collapseSolarCard();
+        });
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const cat = btn.getAttribute('data-tab');
+                renderSolarCategory(cat);
+            });
+        });
+
+        function expandSolarCard() {
+            solarCard.classList.add('expanded');
+            collapsedView.style.display = 'none';
+            expandedView.style.display = 'block';
+
+            const activeTab = solarCard.querySelector('.solar-tab-btn.active');
+            const defaultCat = activeTab ? activeTab.getAttribute('data-tab') : 'residential';
+            renderSolarCategory(defaultCat);
+
+            setTimeout(() => {
+                solarCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function collapseSolarCard() {
+            if (!solarCard.classList.contains('expanded')) return;
+            
+            solarCard.classList.remove('expanded');
+            collapsedView.style.display = 'block';
+            expandedView.style.display = 'none';
+
+            setTimeout(() => {
+                document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }
 }
 
 /* ==========================================
