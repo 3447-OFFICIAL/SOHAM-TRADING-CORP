@@ -10,7 +10,7 @@ The `index.html` file has been injected with the following structured data to en
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Soham Trading Corporation",
-  "image": "https://www.sohamtrading.com/images/logo.webp",
+  "image": "https://www.sohamtrading.com/images/logo.jpg",
   "url": "https://www.sohamtrading.com/",
   "telephone": "+919371675723",
   "address": {
