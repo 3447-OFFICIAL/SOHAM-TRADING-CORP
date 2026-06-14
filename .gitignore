@@ -4,3 +4,33 @@ build/
 .env
 .env.local
 coverage/
+
+# ========================================================
+# Antigravity AI, Agent Skills & AI Workspace Ignore Rules
+# ========================================================
+
+# Local Antigravity skills and agent configurations
+antigravity-skills/
+.antigravity/
+.agents/
+skills/
+skillpacks/
+
+# Skill definition files
+*.skill
+*.skills
+
+# Downloaded skill archives and temporary archives
+*.zip
+*.tar.gz
+*.tgz
+
+# Generated AI cache files and logs
+.ai-cache/
+.cortex-cache/
+*.log
+
+# Local AI workspace config files that should not be committed
+.antigravity-install-manifest.json
+ai-settings.local.json
+
