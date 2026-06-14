@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Particles Grid on Canvas (Smart Grid background)
-    initCanvasParticles();
-
     // Navigation and Scrolling behavior
     initNavigation();
 
@@ -23,108 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Contact Form handling
     initContactForm();
 });
-
-/* ==========================================
-   1. Canvas Smart Grid Particles Animation
-   ========================================== */
-function initCanvasParticles() {
-    const canvas = document.getElementById('canvas-grid');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    let width = (canvas.width = canvas.offsetWidth);
-    let height = (canvas.height = canvas.offsetHeight);
-
-    const particles = [];
-    const maxParticles = width < 768 ? 40 : 90;
-    const connectionDistance = 120;
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = Math.random() * 2 + 1;
-            // Diverse glowing colors corresponding to company verticals
-            const colors = ['#00d2ff', '#00f5d4', '#ffbe0b', '#ffffff'];
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = this.color;
-            ctx.fill();
-            ctx.shadowBlur = 0; // reset
-        }
-    }
-
-    // Populate particles
-    for (let i = 0; i < maxParticles; i++) {
-        particles.push(new Particle());
-    }
-
-    // Window resize handler
-    window.addEventListener('resize', () => {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-    });
-
-    // Intersection Observer to pause animation when off-screen
-    let isVisible = true;
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            isVisible = entry.isIntersecting;
-            if (isVisible) {
-                animate();
-            }
-        });
-    }, { threshold: 0 });
-    observer.observe(canvas);
-
-    // Draw loops
-    function animate() {
-        if (!isVisible) return;
-        ctx.clearRect(0, 0, width, height);
-        
-        // Draw connection lines representing the "Grid"
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].draw();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < connectionDistance) {
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    // Fade lines out further away
-                    const alpha = (1 - dist / connectionDistance) * 0.15;
-                    ctx.strokeStyle = `rgba(0, 210, 255, ${alpha})`;
-                    ctx.lineWidth = 0.8;
-                    ctx.stroke();
-                }
-            }
-        }
-        requestAnimationFrame(animate);
-    }
-    // Start animation if visible
-    if (isVisible) animate();
-}
 
 /* ==========================================
    2. Navigation Header & Mobile Menu
