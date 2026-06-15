@@ -3,15 +3,24 @@ window.solarProjectsData = {
     residential: [
         {
             id: "res-1",
-            name: "Green Valley Villas",
-            capacity: "10 kWp",
-            location: "Pune, MH",
-            date: "May 2026",
-            client: "Green Valley Owners Association",
-            desc: "Rooftop solar installation for luxury villas with net-metering integration.",
+            name: "Nashik Technomets",
+            capacity: "75 kWp",
+            location: "Satpur, Nashik",
+            client: "Nashik Technomets",
+            desc: "75 kWp industrial rooftop solar power plant designed and commissioned for Nashik Technomets, Satpur. The project includes high-efficiency solar PV modules, Growatt inverter integration, LT panel installation, and complete grid-connected commissioning.",
+            projectType: "Industrial Rooftop Solar Installation",
+            badge: "Industrial Solar Project",
+            capacityHighlight: "75 kWp Installed Capacity",
+            bgSize: "contain",
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png"
+                "images/nashik-technomets-rooftop.jpg",
+                "images/nashik-technomets-inverter.jpg",
+                "images/nashik-technomets-lt-panel.jpg"
+            ],
+            captions: [
+                "Rooftop Solar Array",
+                "Growatt Inverter System",
+                "LT Distribution Panel"
             ]
         },
         {

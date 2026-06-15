@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Contact Form handling
     initContactForm();
+
+    // Project Details & Gallery Modal Management
+    initProjectDetailsModal();
+    initProjectGalleryModal();
 });
 
 /* ==========================================
@@ -289,8 +293,9 @@ function renderSolarCategory(categoryName) {
     projects.forEach(proj => {
         // Build image slides HTML
         let slidesHTML = '';
+        const bgSize = proj.bgSize || 'cover';
         proj.images.forEach(imgUrl => {
-            slidesHTML += `<div class="solar-subproject-slide" style="background-image: url('${imgUrl}');"></div>`;
+            slidesHTML += `<div class="solar-subproject-slide" style="background-image: url('${imgUrl}'); background-size: ${bgSize}; background-repeat: no-repeat; background-position: center; background-color: #070912;"></div>`;
         });
 
         // Build navigation dots if multiple images
@@ -314,12 +319,14 @@ function renderSolarCategory(categoryName) {
 
         const projectHTML = `
             <div class="solar-subproject-card" data-project-id="${proj.id}">
-                <div class="solar-subproject-img-container">
+                <div class="solar-subproject-img-container" style="cursor: pointer;">
                     <div class="solar-subproject-slides">
                         ${slidesHTML}
                     </div>
                     ${arrowsHTML}
                     ${dotsHTML}
+                    ${proj.badge ? `<span class="solar-subproject-badge">${proj.badge}</span>` : ''}
+                    ${proj.capacityHighlight ? `<span class="solar-subproject-cap-badge">${proj.capacityHighlight}</span>` : ''}
                 </div>
                 <div class="solar-subproject-content">
                     <div>
@@ -339,10 +346,26 @@ function renderSolarCategory(categoryName) {
                             <span class="solar-subproject-meta-label">Location</span>
                             <span class="solar-subproject-meta-val">${proj.location}</span>
                         </div>
+                        ${proj.date ? `
                         <div class="solar-subproject-meta-item">
-                            <span class="solar-subproject-meta-label">Date</span>
+                            <span class="solar-subproject-meta-label">Completion Date</span>
                             <span class="solar-subproject-meta-val">${proj.date}</span>
                         </div>
+                        ` : ''}
+                        ${proj.projectType ? `
+                        <div class="solar-subproject-meta-item" style="grid-column: span 2; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 8px; margin-top: 4px;">
+                            <span class="solar-subproject-meta-label">Project Type</span>
+                            <span class="solar-subproject-meta-val" style="color: var(--color-blue); font-weight: 600;">${proj.projectType}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="solar-subproject-footer" style="margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 15px;">
+                        <button class="btn btn-secondary btn-view-project-details" data-project-id="${proj.id}" style="width: 100%; padding: 10px 16px; font-size: 0.85rem; border-radius: 8px;">
+                            View Project Details
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left: 4px; display: inline-block; vertical-align: middle;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -367,6 +390,7 @@ function initSolarSlides() {
         if (slides.length <= 1) return;
 
         let currentIndex = 0;
+        let autoSlideInterval = null;
 
         function updateSlider() {
             slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -379,11 +403,27 @@ function initSolarSlides() {
             });
         }
 
+        function startAutoSlide() {
+            stopAutoSlide();
+            autoSlideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            }, 4000); // auto-slide every 4 seconds
+        }
+
+        function stopAutoSlide() {
+            if (autoSlideInterval) {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = null;
+            }
+        }
+
         if (prevBtn) {
             prevBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 currentIndex = (currentIndex - 1 + slides.length) % slides.length;
                 updateSlider();
+                startAutoSlide(); // reset auto-slide timer
             });
         }
 
@@ -392,6 +432,7 @@ function initSolarSlides() {
                 e.stopPropagation();
                 currentIndex = (currentIndex + 1) % slides.length;
                 updateSlider();
+                startAutoSlide(); // reset auto-slide timer
             });
         }
 
@@ -400,8 +441,16 @@ function initSolarSlides() {
                 e.stopPropagation();
                 currentIndex = parseInt(dot.getAttribute('data-index'), 10);
                 updateSlider();
+                startAutoSlide(); // reset auto-slide timer
             });
         });
+
+        // Pause slide show on hover
+        card.addEventListener('mouseenter', stopAutoSlide);
+        card.addEventListener('mouseleave', startAutoSlide);
+
+        // Start initially
+        startAutoSlide();
     });
 }
 
@@ -648,6 +697,377 @@ function initCalculators() {
         backupTimeSlider.addEventListener('input', calculateBackup);
         facilityTypeSelect.addEventListener('change', calculateBackup);
         calculateBackup(); // Initial run
+    }
+}
+
+/* ==========================================
+   9. Premium Project Details Modal
+   ========================================== */
+function initProjectDetailsModal() {
+    const modal = document.getElementById('project-details-modal');
+    if (!modal) return;
+
+    const closeBtn = modal.querySelector('.project-modal-close');
+    const backdrop = modal.querySelector('.modal-backdrop');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    // Event delegation for project details button
+    const grid = document.getElementById('solar-expanded-grid');
+    if (grid) {
+        grid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-view-project-details');
+            if (!btn) return;
+            e.preventDefault();
+            const projId = btn.getAttribute('data-project-id');
+            openProjectDetailsModal(projId);
+        });
+    }
+}
+
+function openProjectDetailsModal(projId) {
+    const modal = document.getElementById('project-details-modal');
+    if (!modal) return;
+
+    // Find the project data
+    let foundProj = null;
+    for (const cat in window.solarProjectsData) {
+        const found = window.solarProjectsData[cat].find(p => p.id === projId);
+        if (found) {
+            foundProj = found;
+            break;
+        }
+    }
+
+    if (!foundProj) return;
+
+    // Populate modal title and desc
+    modal.querySelector('.project-modal-title').textContent = foundProj.name;
+    modal.querySelector('.project-modal-desc').textContent = foundProj.desc;
+    
+    // Badges
+    const badgeEl = modal.querySelector('.project-modal-badge');
+    if (badgeEl) {
+        badgeEl.textContent = foundProj.badge || "Solar EPC Project";
+        badgeEl.style.display = foundProj.badge ? 'block' : 'none';
+    }
+    const capHighlightEl = modal.querySelector('.project-modal-cap-highlight');
+    if (capHighlightEl) {
+        capHighlightEl.textContent = foundProj.capacityHighlight || foundProj.capacity;
+        capHighlightEl.style.display = (foundProj.capacityHighlight || foundProj.capacity) ? 'block' : 'none';
+    }
+
+    // Populate gallery slides
+    const slidesContainer = modal.querySelector('.project-modal-slides');
+    const dotsContainer = modal.querySelector('.project-modal-dots');
+    slidesContainer.innerHTML = '';
+    dotsContainer.innerHTML = '';
+    
+    const bgSize = foundProj.bgSize || 'cover';
+    foundProj.images.forEach((imgUrl, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'project-modal-slide';
+        slide.style.backgroundImage = `url('${imgUrl}')`;
+        slide.style.backgroundSize = bgSize;
+        slide.style.backgroundRepeat = 'no-repeat';
+        slide.style.backgroundPosition = 'center';
+        slide.style.backgroundColor = '#070912';
+        slidesContainer.appendChild(slide);
+
+        if (foundProj.images.length > 1) {
+            const dot = document.createElement('div');
+            dot.className = `project-modal-dot ${idx === 0 ? 'active' : ''}`;
+            dot.setAttribute('data-index', idx);
+            dotsContainer.appendChild(dot);
+        }
+    });
+
+    // Toggle arrow navigation buttons
+    const prevBtn = modal.querySelector('.project-modal-arrow.prev');
+    const nextBtn = modal.querySelector('.project-modal-arrow.next');
+    if (foundProj.images.length <= 1) {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        dotsContainer.style.display = 'none';
+    } else {
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
+        dotsContainer.style.display = 'flex';
+    }
+
+    // Modal gallery slider logic
+    let currentIndex = 0;
+    const slides = modal.querySelectorAll('.project-modal-slide');
+    const dots = modal.querySelectorAll('.project-modal-dot');
+
+    function updateSlider() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach((dot, idx) => {
+            if (idx === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    // Remove old listeners to avoid multiple events firing
+    const newPrevBtn = prevBtn.cloneNode(true);
+    const newNextBtn = nextBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+
+    newPrevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlider();
+    });
+
+    newNextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlider();
+    });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentIndex = parseInt(dot.getAttribute('data-index'), 10);
+            updateSlider();
+        });
+    });
+
+    // Reset slider transform
+    slidesContainer.style.transform = 'translateX(0)';
+
+    // Populate specs grid
+    const specsGrid = modal.querySelector('.project-modal-specs-grid');
+    specsGrid.innerHTML = `
+        <div class="project-modal-spec-item">
+            <span class="project-modal-spec-label">Client</span>
+            <span class="project-modal-spec-value">${foundProj.client}</span>
+        </div>
+        <div class="project-modal-spec-item">
+            <span class="project-modal-spec-label">Capacity</span>
+            <span class="project-modal-spec-value">${foundProj.capacity}</span>
+        </div>
+        <div class="project-modal-spec-item">
+            <span class="project-modal-spec-label">Location</span>
+            <span class="project-modal-spec-value">${foundProj.location}</span>
+        </div>
+        ${foundProj.date ? `
+        <div class="project-modal-spec-item">
+            <span class="project-modal-spec-label">Completion Date</span>
+            <span class="project-modal-spec-value">${foundProj.date}</span>
+        </div>
+        ` : ''}
+        ${foundProj.projectType ? `
+        <div class="project-modal-spec-item" style="grid-column: span 2; border-left: 3px solid var(--color-blue);">
+            <span class="project-modal-spec-label">Project Type</span>
+            <span class="project-modal-spec-value" style="color: var(--color-blue);">${foundProj.projectType}</span>
+        </div>
+        ` : ''}
+    `;
+
+    // Configure Inquire button
+    const inquireBtn = modal.querySelector('.btn-modal-inquire');
+    if (inquireBtn) {
+        // Clone and replace to prevent multiple listeners
+        const newInquireBtn = inquireBtn.cloneNode(true);
+        inquireBtn.parentNode.replaceChild(newInquireBtn, inquireBtn);
+        
+        newInquireBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Close modal
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            
+            // Scroll to contact form
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Autofill inquiry form
+                const serviceSelect = document.getElementById('form-service');
+                if (serviceSelect) {
+                    serviceSelect.value = 'solar';
+                }
+                const messageTextarea = document.getElementById('form-message');
+                if (messageTextarea) {
+                    messageTextarea.value = `I am interested in a solar EPC project similar to ${foundProj.name} (${foundProj.capacity} capacity). Please get in touch to discuss parameters.`;
+                    messageTextarea.focus();
+                }
+            }
+        });
+    }
+
+    // Configure WhatsApp button text or prefilled query
+    const whatsappBtn = modal.querySelector('.btn-modal-whatsapp');
+    if (whatsappBtn) {
+        const text = encodeURIComponent(`Hello, I am interested in a Solar EPC project similar to ${foundProj.name} (${foundProj.capacity} capacity, ${foundProj.location}). Please share details.`);
+        whatsappBtn.setAttribute('href', `https://wa.me/919822511373?text=${text}`);
+    }
+
+    // Open modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+/* ==========================================
+   10. Project Gallery Modal (Full-Screen Preview)
+   ========================================== */
+function initProjectGalleryModal() {
+    const modal = document.getElementById('project-gallery-modal');
+    if (!modal) return;
+
+    const closeBtn = modal.querySelector('.gallery-modal-close');
+    const backdrop = modal.querySelector('.modal-backdrop');
+    const zoomWrapper = modal.querySelector('.gallery-modal-zoom-wrapper');
+    const zoomImg = modal.querySelector('.gallery-modal-img');
+    const prevBtn = modal.querySelector('.gallery-modal-arrow.prev');
+    const nextBtn = modal.querySelector('.gallery-modal-arrow.next');
+    const zoomBtn = modal.querySelector('.gallery-modal-zoom-btn');
+    const captionText = modal.querySelector('.gallery-modal-caption-text');
+    const counterEl = modal.querySelector('.gallery-modal-counter');
+
+    let currentProj = null;
+    let currentIdx = 0;
+    let isZoomed = false;
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        resetZoom();
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    function resetZoom() {
+        isZoomed = false;
+        zoomWrapper.style.transform = 'scale(1)';
+        zoomWrapper.style.cursor = 'zoom-in';
+        zoomImg.style.transform = 'translate(0px, 0px)';
+    }
+
+    function toggleZoom() {
+        isZoomed = !isZoomed;
+        if (isZoomed) {
+            zoomWrapper.style.transform = 'scale(2.2)';
+            zoomWrapper.style.cursor = 'zoom-out';
+        } else {
+            resetZoom();
+        }
+    }
+
+    if (zoomWrapper) {
+        zoomWrapper.addEventListener('click', (e) => {
+            if (e.target === zoomImg || e.target === zoomWrapper) {
+                toggleZoom();
+            }
+        });
+    }
+    if (zoomBtn) {
+        zoomBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleZoom();
+        });
+    }
+
+    function showImage(idx) {
+        if (!currentProj) return;
+        currentIdx = (idx + currentProj.images.length) % currentProj.images.length;
+        
+        zoomImg.src = currentProj.images[currentIdx];
+        
+        // Captions
+        const caption = (currentProj.captions && currentProj.captions[currentIdx]) || currentProj.name;
+        captionText.textContent = caption;
+        
+        // Counter
+        counterEl.textContent = `${currentIdx + 1} / ${currentProj.images.length}`;
+        resetZoom();
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showImage(currentIdx - 1);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showImage(currentIdx + 1);
+        });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') {
+            showImage(currentIdx - 1);
+        } else if (e.key === 'ArrowRight') {
+            showImage(currentIdx + 1);
+        } else if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Wire up gallery modal triggers on portfolio cards
+    const grid = document.getElementById('solar-expanded-grid');
+    if (grid) {
+        grid.addEventListener('click', (e) => {
+            // Find if click is inside image container
+            const imgContainer = e.target.closest('.solar-subproject-img-container');
+            if (!imgContainer) return;
+            
+            // Avoid triggering modal if clicking navigation components
+            if (e.target.closest('.solar-gallery-arrow') || e.target.closest('.solar-gallery-dots')) {
+                return;
+            }
+
+            e.preventDefault();
+            const card = imgContainer.closest('.solar-subproject-card');
+            if (!card) return;
+            
+            const projId = card.getAttribute('data-project-id');
+            
+            // Find project data
+            let foundProj = null;
+            for (const cat in window.solarProjectsData) {
+                const found = window.solarProjectsData[cat].find(p => p.id === projId);
+                if (found) {
+                    foundProj = found;
+                    break;
+                }
+            }
+
+            if (!foundProj) return;
+
+            currentProj = foundProj;
+            
+            // Get current slide index from style transform
+            const slidesWrapper = card.querySelector('.solar-subproject-slides');
+            let startIdx = 0;
+            if (slidesWrapper && slidesWrapper.style.transform) {
+                const match = slidesWrapper.style.transform.match(/translateX\(-(\d+)%\)/);
+                if (match && match[1]) {
+                    startIdx = Math.round(parseInt(match[1], 10) / 100);
+                }
+            }
+
+            showImage(startIdx);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
     }
 }
 
