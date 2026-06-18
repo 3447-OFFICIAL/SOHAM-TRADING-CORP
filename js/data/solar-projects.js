@@ -111,15 +111,30 @@ window.solarProjectsData = {
     government: [
         {
             id: "gov-1",
-            name: "Municipal Building Solar",
-            capacity: "80 kWp",
-            location: "Mumbai, MH",
-            date: "November 2025",
-            client: "Municipal Corporation of Greater Mumbai",
-            desc: "Public infrastructure clean energy plant with real-time remote monitoring dashboard.",
+            name: "Maharashtra University of Health Sciences",
+            capacity: "300 kWp",
+            location: "MUHS, Nashik",
+            client: "Maharashtra University of Health Sciences (MUHS)",
+            desc: "300 kWp rooftop solar power plant installed at Maharashtra University of Health Sciences (MUHS), Nashik. The project supports sustainable energy generation for educational infrastructure while reducing electricity costs and carbon emissions.",
+            projectType: "Institutional Rooftop Solar Power Plant",
+            capacityHighlight: "300 KWP INSTALLED CAPACITY",
+            bgSize: "contain",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/muhs-solar-1.jpg",
+                "images/muhs-solar-2.jpg",
+                "images/muhs-solar-3.jpg",
+                "images/muhs-solar-4.jpg",
+                "images/muhs-solar-5.jpg"
+            ],
+            captions: [
+                "300 kWp Institutional Rooftop Solar Plant – Maharashtra University of Health Sciences (MUHS), Nashik",
+                "Grid-Tied Solar Inverters & Distribution Panel Integration",
+                "Elevated Rooftop Structure & Heavy Concrete Footings",
+                "System Earthing & AC/DC Cabling Layout on Building Facade",
+                "Solar Module Assembly & Structural Construction Phase"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         },
         {
             id: "gov-2",
