@@ -2400,8 +2400,8 @@
       background: rgba(10, 12, 22, 0.85);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 190, 11, 0.35);
-      color: var(--color-gold);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+      color: var(--color-blue);
       text-transform: uppercase;
       letter-spacing: 0.05em;
   }
@@ -2534,8 +2534,8 @@
       background: rgba(10, 12, 22, 0.9);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 190, 11, 0.35);
-      color: var(--color-gold);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+      color: var(--color-blue);
       padding: 6px 14px;
       border-radius: 50px;
       font-size: 0.75rem;

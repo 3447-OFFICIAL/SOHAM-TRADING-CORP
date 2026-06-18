@@ -69,16 +69,30 @@ window.solarProjectsData = {
         },
         {
             id: "ind-2",
-            name: "Warehouse Solar Installation",
-            capacity: "320 kWp",
-            location: "Bhiwandi, MH",
-            date: "March 2026",
-            client: "Global Logistics Hub",
-            desc: "High-yield monocrystalline panels on warehouse metal deck roofing.",
+            name: "Precise Vacuum Pvt. Ltd.",
+            capacity: "500 kWp",
+            location: "Shinde, Nashik",
+            client: "Precise Vacuum Pvt. Ltd.",
+            desc: "500 kWp industrial rooftop solar power plant installed for Precise Vacuum Pvt. Ltd. at Shinde, Nashik. The system delivers reliable clean energy generation, significant electricity cost savings, and long-term sustainability for industrial operations.",
+            projectType: "Industrial Rooftop Solar Power Plant",
+            capacityHighlight: "500 kWp Installed Capacity",
+            bgSize: "contain",
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png"
-            ]
+                "images/precise-vacuum-1.jpg",
+                "images/precise-vacuum-2.jpg",
+                "images/precise-vacuum-3.jpg",
+                "images/precise-vacuum-4.jpg",
+                "images/precise-vacuum-5.jpg"
+            ],
+            captions: [
+                "Project Inauguration & Commissioning Ceremony – Precise Vacuum Pvt. Ltd. 500 kWp Solar Plant",
+                "500 kWp Industrial Rooftop Solar Installation",
+                "Solar PV Module Installation Across Industrial Facility",
+                "Lightning Protection & Plant Safety Infrastructure",
+                "Solis Grid-Tied Inverter System"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         },
         {
             id: "ind-3",
