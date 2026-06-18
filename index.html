@@ -953,6 +953,18 @@
                                         <span class="calc-metric-val" id="solar-res-capacity" style="color: var(--color-blue);">-- kW</span>
                                     </div>
                                     <div class="calc-metric-row">
+                                        <span class="calc-metric-lbl">Required Roof Area</span>
+                                        <span class="calc-metric-val" id="solar-res-req-area">-- Sq. Ft.</span>
+                                    </div>
+                                    <div class="calc-metric-row">
+                                        <span class="calc-metric-lbl">Available Roof Area</span>
+                                        <span class="calc-metric-val" id="solar-res-avail-area">-- Sq. Ft.</span>
+                                    </div>
+                                    <div class="calc-metric-row">
+                                        <span class="calc-metric-lbl">Roof Area Status</span>
+                                        <span class="calc-metric-val" id="solar-res-status" style="font-weight: 700;">--</span>
+                                    </div>
+                                    <div class="calc-metric-row">
                                         <span class="calc-metric-lbl">Estimated Project Cost</span>
                                         <span class="calc-metric-val" id="solar-res-cost">--</span>
                                     </div>
@@ -960,17 +972,21 @@
                                         <span class="calc-metric-lbl">Annual Savings</span>
                                         <span class="calc-metric-val" id="solar-res-savings">--</span>
                                     </div>
+                                    <div class="calc-metric-row highlighted" style="border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 10px; margin-top: 5px;">
+                                        <span class="calc-metric-lbl">30-Year Lifetime Savings</span>
+                                        <span class="calc-metric-val" id="solar-res-lifetime-savings" style="color: var(--color-green);">--</span>
+                                    </div>
                                     <div class="calc-metric-row">
                                         <span class="calc-metric-lbl">ROI Period</span>
                                         <span class="calc-metric-val" id="solar-res-roi">--</span>
                                     </div>
                                     <div class="calc-metric-row">
-                                        <span class="calc-metric-lbl">CO2 Reduction Offset</span>
+                                        <span class="calc-metric-lbl">CO₂ Reduction Offset</span>
                                         <span class="calc-metric-val" id="solar-res-carbon" style="color: var(--color-green);">--</span>
                                     </div>
                                 </div>
                             </div>
-                            <p class="calc-results-disclaimer">Values generated are estimates based on average standard solar yields in India. Exact values depend on orientation, shade parameters, and grid tariff schemes. Request an exact survey for a commercial quote.</p>
+                            <p class="calc-results-disclaimer">System size is calculated to offset current consumption plus future electricity growth over the next 30 years while accounting for solar panel degradation and maintaining near-zero electricity bills through net metering.</p>
                         </div>
                     </div>
                 </div>

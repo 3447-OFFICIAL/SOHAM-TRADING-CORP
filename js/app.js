@@ -586,8 +586,12 @@ function initCalculators() {
 
     // Result Nodes
     const solarCapNode = document.getElementById('solar-res-capacity');
+    const solarReqAreaNode = document.getElementById('solar-res-req-area');
+    const solarAvailAreaNode = document.getElementById('solar-res-avail-area');
+    const solarStatusNode = document.getElementById('solar-res-status');
     const solarCostNode = document.getElementById('solar-res-cost');
     const solarSavingsNode = document.getElementById('solar-res-savings');
+    const solarLifetimeSavingsNode = document.getElementById('solar-res-lifetime-savings');
     const solarRoiNode = document.getElementById('solar-res-roi');
     const solarCarbonNode = document.getElementById('solar-res-carbon');
 
@@ -599,45 +603,63 @@ function initCalculators() {
         solarBillVal.textContent = monthlyBill.toLocaleString('en-IN');
         solarAreaVal.textContent = roofArea.toLocaleString('en-IN');
 
-        // General Math Model:
-        // 1. Calculate required capacity based on bill:
-        // Average unit cost in India ~ 8 INR
-        // Monthly units consumed = Monthly bill / 8
-        // 1 kW Solar produces roughly 120 units per month
-        // Suggested solar capacity = Monthly units consumed / 120
-        const tariff = 8;
+        // Calculation Parameters
+        const tariff = 10;
+        const annualGrowthRate = 0.03;
+        const solarGenerationPerKW = 1500; // kWh/year in India
+
         const monthlyUnits = monthlyBill / tariff;
-        const requiredCapacity = monthlyUnits / 120; // in kW
+        const annualUnits = monthlyUnits * 12;
 
-        // 2. Area limitation check:
-        // 1 kW Solar requires roughly 100 sq.ft
-        const maxCapacityFromArea = roofArea / 100;
+        // Total projected consumption over 30 years
+        const totalConsumption30Years = annualUnits * (((1 + annualGrowthRate) ** 30 - 1) / annualGrowthRate);
 
-        // Suggested system size is the minimum of required vs area limit, rounded to 1 decimal place
-        let systemCapacity = Math.min(requiredCapacity, maxCapacityFromArea);
-        if (systemCapacity < 1) systemCapacity = 1; // min 1kW
-        systemCapacity = Math.round(systemCapacity * 10) / 10;
+        // Account for panel degradation (approx average output factor over 30 years is 0.925)
+        const degradationFactor = 0.925;
 
-        // Costs (Average system cost around 65,000 INR per kW for small, 50,000 INR for larger scale)
-        const costPerKw = systemCapacity > 10 ? 55000 : 65000;
-        const totalCost = Math.round(systemCapacity * costPerKw);
+        // Required annual generation with safety margin (10%)
+        let requiredAnnualGeneration = (totalConsumption30Years / 30) / degradationFactor;
+        requiredAnnualGeneration *= 1.10;
 
-        // Annual Savings: System kW * 120 units/month * 12 months * unit price
-        const annualUnits = systemCapacity * 120 * 12;
-        const annualSavings = Math.round(annualUnits * tariff);
+        // Solar capacity calculation
+        const solarCapacityKW = requiredAnnualGeneration / solarGenerationPerKW;
+        const systemCapacity = Math.max(1, Math.round(solarCapacityKW * 10) / 10); // Minimum 1 kW
 
-        // ROI Duration: Total Cost / Annual Savings
-        const roi = Math.round((totalCost / (annualSavings || 1)) * 10) / 10;
+        // Roof area required: 100 Sq. Ft. per kW
+        const requiredRoofArea = Math.round(systemCapacity * 100);
 
-        // Carbon Offset: ~0.8 tonnes (800kg) CO2 reduced per 1 kW solar per year
-        const carbonOffset = Math.round(systemCapacity * 0.82 * 10) / 10;
+        // Roof suitability check
+        let roofStatus = "";
+        if (roofArea >= requiredRoofArea) {
+            roofStatus = "✅ Roof Area Sufficient";
+            solarStatusNode.style.color = "var(--color-green)";
+        } else {
+            const roofShortfall = requiredRoofArea - roofArea;
+            roofStatus = `❌ Shortfall: ${roofShortfall.toLocaleString('en-IN')} Sq. Ft.`;
+            solarStatusNode.style.color = "#ff5400";
+        }
+
+        // Financials
+        const projectCost = Math.round(systemCapacity * 65000);
+        const annualSavings = Math.round(monthlyBill * 12);
+        const lifetimeSavings = Math.round(annualSavings * 30);
+        
+        // ROI Period
+        const roiYears = Math.round((projectCost / (annualSavings || 1)) * 10) / 10;
+
+        // CO2 Offset
+        const co2Offset = Math.round(systemCapacity * 0.82 * 10) / 10;
 
         // Update displays
         solarCapNode.textContent = `${systemCapacity} kW`;
-        solarCostNode.textContent = `₹ ${totalCost.toLocaleString('en-IN')}`;
+        solarReqAreaNode.textContent = `${requiredRoofArea.toLocaleString('en-IN')} Sq. Ft.`;
+        solarAvailAreaNode.textContent = `${roofArea.toLocaleString('en-IN')} Sq. Ft.`;
+        solarStatusNode.textContent = roofStatus;
+        solarCostNode.textContent = `₹ ${projectCost.toLocaleString('en-IN')}`;
         solarSavingsNode.textContent = `₹ ${annualSavings.toLocaleString('en-IN')}`;
-        solarRoiNode.textContent = `${roi} Years`;
-        solarCarbonNode.textContent = `${carbonOffset} Tonnes / Yr`;
+        solarLifetimeSavingsNode.textContent = `₹ ${lifetimeSavings.toLocaleString('en-IN')}`;
+        solarRoiNode.textContent = `${roiYears} Years`;
+        solarCarbonNode.textContent = `${co2Offset} Tonnes / Yr`;
     }
 
     if (solarBillSlider && solarAreaSlider) {

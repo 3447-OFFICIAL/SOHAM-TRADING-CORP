@@ -2,28 +2,6 @@
 window.solarProjectsData = {
     residential: [
         {
-            id: "res-1",
-            name: "Nashik Technomets",
-            capacity: "75 kWp",
-            location: "Satpur, Nashik",
-            client: "Nashik Technomets",
-            desc: "75 kWp industrial rooftop solar power plant designed and commissioned for Nashik Technomets, Satpur. The project includes high-efficiency solar PV modules, Growatt inverter integration, LT panel installation, and complete grid-connected commissioning.",
-            projectType: "Industrial Rooftop Solar Installation",
-            badge: "Industrial Solar Project",
-            capacityHighlight: "75 kWp Installed Capacity",
-            bgSize: "contain",
-            images: [
-                "images/nashik-technomets-rooftop.jpg",
-                "images/nashik-technomets-inverter.jpg",
-                "images/nashik-technomets-lt-panel.jpg"
-            ],
-            captions: [
-                "Rooftop Solar Array",
-                "Growatt Inverter System",
-                "LT Distribution Panel"
-            ]
-        },
-        {
             id: "res-2",
             name: "R. D. Dhondgesir Residence",
             capacity: "5 kWp",
@@ -68,15 +46,26 @@ window.solarProjectsData = {
     industrial: [
         {
             id: "ind-1",
-            name: "Manufacturing Plant Solar",
-            capacity: "150 kWp",
-            location: "Chakan, MH",
-            date: "February 2026",
-            client: "Apex Auto Parts",
-            desc: "Heavy-duty industrial rooftop installation reducing grid dependence by 40%.",
+            name: "Nashik Technomets",
+            capacity: "75 kWp",
+            location: "Satpur, Nashik",
+            client: "Nashik Technomets",
+            desc: "75 kWp industrial rooftop solar power plant designed and commissioned for Nashik Technomets, Satpur. The project includes high-efficiency solar PV modules, Growatt inverter integration, LT panel installation, and complete grid-connected commissioning.",
+            projectType: "Industrial Rooftop Solar Installation",
+            capacityHighlight: "75 kWp Installed Capacity",
+            bgSize: "contain",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/nashik-technomets-rooftop.jpg",
+                "images/nashik-technomets-inverter.jpg",
+                "images/nashik-technomets-lt-panel.jpg"
+            ],
+            captions: [
+                "Rooftop Solar Array",
+                "Growatt Inverter System",
+                "LT Distribution Panel"
+            ],
+            btnText: "View Project Gallery",
+            action: "gallery"
         },
         {
             id: "ind-2",
