@@ -319,6 +319,9 @@ function renderSolarCategory(categoryName) {
 
         // Build badges
         let badgesLeftHTML = '';
+        if (proj.capacityHighlight && proj.capacityHighlightPosition === 'left') {
+            badgesLeftHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${proj.capacityHighlight}</span>`;
+        }
         if (proj.badges && proj.badges.length > 0) {
             proj.badges.forEach(b => {
                 badgesLeftHTML += `<span class="solar-subproject-badge" style="position: static;">${b}</span>`;
@@ -328,7 +331,7 @@ function renderSolarCategory(categoryName) {
         }
 
         let badgesRightHTML = '';
-        if (proj.capacityHighlight) {
+        if (proj.capacityHighlight && proj.capacityHighlightPosition !== 'left') {
             badgesRightHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${proj.capacityHighlight}</span>`;
         }
 
@@ -344,7 +347,7 @@ function renderSolarCategory(categoryName) {
                     </div>
                     ${arrowsHTML}
                     ${dotsHTML}
-                    <div style="position: absolute; top: 15px; left: 15px; display: flex; flex-direction: column; gap: 6px; z-index: 5; align-items: flex-start;">
+                    <div style="position: absolute; bottom: 15px; left: 15px; display: flex; flex-direction: column; gap: 6px; z-index: 5; align-items: flex-start;">
                         ${badgesLeftHTML}
                     </div>
                     <div style="position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 6px; z-index: 5; align-items: flex-end;">

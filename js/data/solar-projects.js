@@ -10,6 +10,7 @@ window.solarProjectsData = {
             desc: "5 kWp residential rooftop solar installation completed for R. D. Dhondgesir at Akashwani Tower, Nashik. The project was executed under the Government Solar Subsidy Scheme, helping reduce electricity bills while promoting clean and sustainable energy generation.",
             projectType: "Residential Rooftop Solar System",
             category: "PM Surya Ghar Subsidy Project",
+            capacityHighlight: "5 kWp Installed Capacity",
             badges: [
                 "Government Subsidy Project",
                 "PM Surya Ghar Beneficiary"
@@ -173,15 +174,33 @@ window.solarProjectsData = {
         },
         {
             id: "mega-2",
-            name: "15 MW Utility Plant",
-            capacity: "15 MWp",
-            location: "Bikaner, RJ",
-            date: "March 2026",
-            client: "NTPC India",
-            desc: "Large-scale utility solar plant designed for maximum yield and high stability.",
+            name: "XYZ Solar Park",
+            capacity: "8 MWp",
+            location: "Hiswal, Nashik",
+            client: "XYZ",
+            desc: "8 MWp ground-mounted solar power plant developed at Hiswal. The project is designed for large-scale clean energy generation with high-performance solar modules, optimized plant design, and reliable long-term power production.",
+            projectType: "Ground Mounted Solar Power Plant",
+            capacityHighlight: "8 MWp Installed Capacity",
+            badges: [
+                "Ground Mounted Solar Plant"
+            ],
+            bgSize: "contain",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/xyz-solar-1.jpg",
+                "images/xyz-solar-2.jpg",
+                "images/xyz-solar-3.jpg",
+                "images/xyz-solar-4.jpg",
+                "images/xyz-solar-5.jpg"
+            ],
+            captions: [
+                "8 MWp Ground Mounted Solar PV Array – XYZ Solar Park",
+                "Ground Mounted Solar Plant Layout at Hiswal, Nashik",
+                "High Voltage Substation & Transformer Yard",
+                "Power Conditioning Unit & Inverter Canopy",
+                "Solar Plant Weather Station & Monitoring Infrastructure"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         },
         {
             id: "mega-3",
