@@ -25,15 +25,30 @@ window.solarProjectsData = {
         },
         {
             id: "res-2",
-            name: "Premium Society Rooftop",
-            capacity: "25 kWp",
-            location: "Mumbai, MH",
-            date: "April 2026",
-            client: "Skyline CHS",
-            desc: "Solar installation for housing society common areas and elevators.",
+            name: "R. D. Dhondgesir Residence",
+            capacity: "5 kWp",
+            location: "Akashwani Tower, Nashik",
+            client: "R. D. Dhondgesir",
+            desc: "5 kWp residential rooftop solar installation completed for R. D. Dhondgesir at Akashwani Tower, Nashik. The project was executed under the Government Solar Subsidy Scheme, helping reduce electricity bills while promoting clean and sustainable energy generation.",
+            projectType: "Residential Rooftop Solar System",
+            category: "PM Surya Ghar Subsidy Project",
+            badges: [
+                "Government Subsidy Project",
+                "PM Surya Ghar Beneficiary"
+            ],
+            bgSize: "contain",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/dhondgesir-inverter.jpg",
+                "images/dhondgesir-rooftop-1.jpg",
+                "images/dhondgesir-rooftop-2.jpg"
+            ],
+            captions: [
+                "Polycab Grid-Tied Inverter & Protection System – 5 kWp Residential Solar Installation",
+                "Rooftop Solar Panel Installation",
+                "Rooftop Solar Panel Array View"
+            ],
+            btnText: "View Project Gallery",
+            action: "gallery"
         },
         {
             id: "res-3",
@@ -137,16 +152,18 @@ window.solarProjectsData = {
             client: "Ukay Metal Industries",
             desc: "1 MWp industrial solar power plant installed for Ukay Metal Industries at Janori, Nashik. The project delivers clean energy generation, reduced operating costs, and long-term sustainability through a high-efficiency grid-connected solar system.",
             projectType: "Industrial Solar Power Plant",
-            badges: [
-                "Mega Watt Project",
-                "Industrial Solar Installation"
-            ],
             capacityHighlight: "1 MWp Installed Capacity",
             images: [
                 "images/ukay-metal-1.jpg",
                 "images/ukay-metal-2.jpg",
                 "images/ukay-metal-3.jpg",
                 "images/ukay-metal-4.jpg"
+            ],
+            captions: [
+                "Rooftop Solar Layout & Bundled Panels during construction",
+                "Completed 1 MWp Industrial Rooftop Solar Array overview",
+                "Industrial Grid-Tied Inverter System & Protection Panels",
+                "Completed Solar Arrays and walkways on the factory rooftop"
             ],
             btnText: "View Project Gallery",
             action: "gallery"
