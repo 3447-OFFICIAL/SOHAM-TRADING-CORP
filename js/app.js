@@ -317,6 +317,25 @@ function renderSolarCategory(categoryName) {
             `;
         }
 
+        // Build badges
+        let badgesLeftHTML = '';
+        if (proj.badges && proj.badges.length > 0) {
+            proj.badges.forEach(b => {
+                badgesLeftHTML += `<span class="solar-subproject-badge" style="position: static;">${b}</span>`;
+            });
+        } else if (proj.badge) {
+            badgesLeftHTML += `<span class="solar-subproject-badge" style="position: static;">${proj.badge}</span>`;
+        }
+
+        let badgesRightHTML = '';
+        if (proj.capacityHighlight) {
+            badgesRightHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${proj.capacityHighlight}</span>`;
+        }
+
+        // Custom CTA button configuration
+        const btnText = proj.btnText || 'View Project Details';
+        const action = proj.action || 'details';
+
         const projectHTML = `
             <div class="solar-subproject-card" data-project-id="${proj.id}">
                 <div class="solar-subproject-img-container" style="cursor: pointer;">
@@ -325,8 +344,12 @@ function renderSolarCategory(categoryName) {
                     </div>
                     ${arrowsHTML}
                     ${dotsHTML}
-                    ${proj.badge ? `<span class="solar-subproject-badge">${proj.badge}</span>` : ''}
-                    ${proj.capacityHighlight ? `<span class="solar-subproject-cap-badge">${proj.capacityHighlight}</span>` : ''}
+                    <div style="position: absolute; top: 15px; left: 15px; display: flex; flex-direction: column; gap: 6px; z-index: 5; align-items: flex-start;">
+                        ${badgesLeftHTML}
+                    </div>
+                    <div style="position: absolute; top: 15px; right: 15px; display: flex; flex-direction: column; gap: 6px; z-index: 5; align-items: flex-end;">
+                        ${badgesRightHTML}
+                    </div>
                 </div>
                 <div class="solar-subproject-content">
                     <div>
@@ -360,8 +383,8 @@ function renderSolarCategory(categoryName) {
                         ` : ''}
                     </div>
                     <div class="solar-subproject-footer" style="margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 15px;">
-                        <button class="btn btn-secondary btn-view-project-details" data-project-id="${proj.id}" style="width: 100%; padding: 10px 16px; font-size: 0.85rem; border-radius: 8px;">
-                            View Project Details
+                        <button class="btn btn-secondary btn-view-project-details" data-project-id="${proj.id}" data-action="${action}" style="width: 100%; padding: 10px 16px; font-size: 0.85rem; border-radius: 8px;">
+                            ${btnText}
                             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-left: 4px; display: inline-block; vertical-align: middle;">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                             </svg>
@@ -726,7 +749,14 @@ function initProjectDetailsModal() {
             if (!btn) return;
             e.preventDefault();
             const projId = btn.getAttribute('data-project-id');
-            openProjectDetailsModal(projId);
+            const action = btn.getAttribute('data-action');
+            if (action === 'gallery') {
+                if (typeof window.openProjectGallery === 'function') {
+                    window.openProjectGallery(projId);
+                }
+            } else {
+                openProjectDetailsModal(projId);
+            }
         });
     }
 }
@@ -1021,6 +1051,26 @@ function initProjectGalleryModal() {
         }
     });
 
+    // Global helper function to open gallery directly
+    window.openProjectGallery = function(projId, startIdx = 0) {
+        // Find project data
+        let foundProj = null;
+        for (const cat in window.solarProjectsData) {
+            const found = window.solarProjectsData[cat].find(p => p.id === projId);
+            if (found) {
+                foundProj = found;
+                break;
+            }
+        }
+
+        if (!foundProj) return;
+
+        currentProj = foundProj;
+        showImage(startIdx);
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
     // Wire up gallery modal triggers on portfolio cards
     const grid = document.getElementById('solar-expanded-grid');
     if (grid) {
@@ -1040,20 +1090,6 @@ function initProjectGalleryModal() {
             
             const projId = card.getAttribute('data-project-id');
             
-            // Find project data
-            let foundProj = null;
-            for (const cat in window.solarProjectsData) {
-                const found = window.solarProjectsData[cat].find(p => p.id === projId);
-                if (found) {
-                    foundProj = found;
-                    break;
-                }
-            }
-
-            if (!foundProj) return;
-
-            currentProj = foundProj;
-            
             // Get current slide index from style transform
             const slidesWrapper = card.querySelector('.solar-subproject-slides');
             let startIdx = 0;
@@ -1064,9 +1100,7 @@ function initProjectGalleryModal() {
                 }
             }
 
-            showImage(startIdx);
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+            window.openProjectGallery(projId, startIdx);
         });
     }
 }

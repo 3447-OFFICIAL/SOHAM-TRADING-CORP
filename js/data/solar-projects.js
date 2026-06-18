@@ -131,16 +131,25 @@ window.solarProjectsData = {
     megawatt: [
         {
             id: "mega-1",
-            name: "5 MW Solar Park",
-            capacity: "5 MWp",
-            location: "Jodhpur, RJ",
-            date: "December 2025",
-            client: "Rajasthan Renewable Energy Corp",
-            desc: "Ground-mounted utility scale grid-connected park with single-axis tracking.",
+            name: "Ukay Metal",
+            capacity: "1 MWp",
+            location: "Janori, Nashik",
+            client: "Ukay Metal Industries",
+            desc: "1 MWp industrial solar power plant installed for Ukay Metal Industries at Janori, Nashik. The project delivers clean energy generation, reduced operating costs, and long-term sustainability through a high-efficiency grid-connected solar system.",
+            projectType: "Industrial Solar Power Plant",
+            badges: [
+                "Mega Watt Project",
+                "Industrial Solar Installation"
+            ],
+            capacityHighlight: "1 MWp Installed Capacity",
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png"
-            ]
+                "images/ukay-metal-1.jpg",
+                "images/ukay-metal-2.jpg",
+                "images/ukay-metal-3.jpg",
+                "images/ukay-metal-4.jpg"
+            ],
+            btnText: "View Project Gallery",
+            action: "gallery"
         },
         {
             id: "mega-2",
