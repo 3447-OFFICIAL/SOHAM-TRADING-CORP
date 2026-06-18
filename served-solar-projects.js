@@ -219,17 +219,26 @@ window.solarProjectsData = {
         },
         {
             id: "mega-3",
-            name: "25 MW Ground Mounted Project",
-            capacity: "25 MWp",
-            location: "Tumakuru, KA",
-            date: "April 2026",
-            client: "Karnataka Power Transmission Corp",
-            desc: "Megawatt scale clean power transmission grid-tied park.",
+            name: "Kirloskar Pneumatic Ltd.",
+            capacity: "1.40 MWp",
+            location: "Eklahare, Nashik",
+            client: "Kirloskar Pneumatic Ltd.",
+            desc: "1.40 MWp industrial solar power plant installed for Kirloskar Pneumatic Ltd. in Nashik. The project delivers large-scale clean energy generation, reduced operational electricity costs, and supports long-term sustainability goals through a high-performance grid-connected solar system.",
+            projectType: "Industrial Rooftop Solar Power Plant",
+            capacityHighlight: "1.40 MWP INSTALLED CAPACITY",
+            bgSize: "contain",
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png",
-                "images/solar-project.png"
-            ]
+                "images/kirloskar-solar-1.jpg",
+                "images/kirloskar-solar-2.jpg",
+                "images/kirloskar-solar-3.jpg"
+            ],
+            captions: [
+                "1.40 MWp Industrial Rooftop Solar Installation – Kirloskar Pneumatic Ltd., Nashik",
+                "Growatt Grid-Tied Inverter Array with Weather Canopy Protection",
+                "Aerial View of the High-Efficiency Solar PV Arrays on Factory Rooftop"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         }
     ]
 };
