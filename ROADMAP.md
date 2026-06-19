@@ -6,7 +6,7 @@ This document outlines the planned technical and feature enhancements for the So
 - **CMS Integration:** Migrate static portfolio data to a Headless CMS (e.g., Sanity or Strapi) to allow the marketing team to add new projects without code deployments.
 - **Client Portal (v1):** Basic authenticated area for existing PMC clients to download site audit reports.
 - **Multi-language Support:** Add i18n support for Marathi and Hindi using generic JSON locale files.
-- **Advanced Calculators:** Expand the ROI calculator to include EV charging station commercial feasibility.
+- **Advanced Calculators:** Expand the ROI calculator to include solar hybrid battery sizing feasibility.
 
 ## Q4 2026
 - **Server-Side Rendering (SSR):** Evaluate migrating to Next.js or Nuxt to improve dynamic SEO rendering for individual project case studies.

@@ -13,7 +13,7 @@
 
 ## Project Overview
 
-Soham Trading Corporation is a premier diversified engineering & energy solutions provider in India. This repository contains the source code for the official landing page, designed to showcase our turnkey solutions in Solar EPC, EV Charging Infrastructure, Industrial UPS, Stabilizers, DG Sets, PMC, and Electrical Infrastructure.
+Soham Trading Corporation is a premier diversified engineering & energy solutions provider in India. This repository contains the source code for the official landing page, designed to showcase our turnkey solutions in Solar EPC, Industrial UPS, Stabilizers, DG Sets, PMC, and Electrical Infrastructure.
 
 ## Problem Statement
 

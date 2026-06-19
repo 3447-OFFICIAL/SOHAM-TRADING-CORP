@@ -11,18 +11,7 @@
           { "icon": "🔧", "title": "Operation & Maintenance (O&M)", "desc": "Thermal drone inspections, automated waterless cleaning, and real-time remote monitoring." }
       ]
   },
-  "ev": {
-      "title": "EV Charging Infrastructure",
-      "desc": "Empowering electric mobility with advanced charging systems, centralized fleet hubs, and certified safety-compliant installation networks.",
-      "themeColor": "linear-gradient(135deg, #00f5d4, #00bbf9)",
-      "themeTextColor": "#00f5d4",
-      "details": [
-          { "icon": "🔌", "title": "Commercial Charging Stations", "desc": "Dual gun AC and DC fast chargers integrated with seamless digital payment interfaces." },
-          { "icon": "🚚", "title": "Fleet Charging Solutions", "desc": "Dedicated high-current charging yards for electric logistics, buses, and corporate fleets." },
-          { "icon": "⚡", "title": "High-Speed DC Fast Chargers", "desc": "CCS2, CHAdeMO, and GB/T standard ultra-fast chargers from 30kW up to 240kW." },
-          { "icon": "📊", "title": "CMS Management Software", "desc": "Cloud-based tracking for station availability, energy utilization, and bill generation." }
-      ]
-  },
+
   "ups": {
       "title": "Industrial UPS & Power Backup",
       "desc": "Complete uninterruptible power supply solutions built for critical operations, medical hubs, and advanced data center environments.",

@@ -23,7 +23,7 @@
       /* Gradients */
       --grad-primary: linear-gradient(135deg, var(--color-blue), var(--color-green));
       --grad-solar: linear-gradient(135deg, var(--color-gold), #ff5400);
-      --grad-ev: linear-gradient(135deg, var(--color-green), #00bbf9);
+
       --grad-power: linear-gradient(135deg, var(--color-blue), #7209b7);
       --grad-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
       --grad-dark-glow: radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.08) 0%, transparent 70%);
@@ -136,11 +136,7 @@
       -webkit-text-fill-color: transparent;
   }
 
-  .text-gradient-ev {
-      background: var(--grad-ev);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
+
 
   .section-title-wrap {
       text-align: center;
@@ -538,16 +534,7 @@
       color: var(--color-gold);
   }
 
-  .node-ev {
-      top: 50%;
-      right: 5%;
-      border-left: 3px solid var(--color-green);
-  }
 
-  .node-ev .node-icon {
-      background: rgba(0, 245, 212, 0.15);
-      color: var(--color-green);
-  }
 
   .node-power {
       bottom: 15%;
@@ -1163,10 +1150,7 @@
       border-color: rgba(255, 190, 11, 0.3);
   }
 
-  .project-badge.ev {
-      color: var(--color-green);
-      border-color: rgba(0, 245, 212, 0.3);
-  }
+
 
   .project-badge.dg {
       color: #ff5400;
@@ -2171,10 +2155,7 @@
           left: 15%;
       }
 
-      .node-ev {
-          top: 40%;
-          right: 0%;
-      }
+
 
       .node-power {
           bottom: 5%;

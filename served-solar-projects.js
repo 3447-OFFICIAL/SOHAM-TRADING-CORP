@@ -138,16 +138,29 @@ window.solarProjectsData = {
         },
         {
             id: "gov-2",
-            name: "Government Hospital Solar",
-            capacity: "120 kWp",
-            location: "Pune, MH",
-            date: "December 2025",
-            client: "Sassoon General Hospital",
-            desc: "Critical load backup-integrated solar plant for uninterrupted patient care.",
+            name: "Kalaram Mandir",
+            capacity: "10 kWp On-Grid + 15 kWp Off-Grid",
+            location: "Kalaram Mandir, Nashik",
+            client: "Kalaram Mandir Trust",
+            desc: "Hybrid solar power system installed at Kalaram Mandir, Nashik, comprising a 10 kWp On-Grid system and a 15 kWp Off-Grid system. The project ensures reliable clean energy generation while providing backup power for uninterrupted temple operations.",
+            projectType: "Hybrid Solar Power System",
+            capacityHighlight: "25 KWP HYBRID SOLAR SYSTEM",
+            badges: [
+                "Hybrid Solar Project",
+                "Temple Solar Installation",
+                "10 kWp On-Grid System",
+                "15 kWp Off-Grid System"
+            ],
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png"
-            ]
+                "images/kalaram-rooftop.jpg",
+                "images/kalaram-inverter.jpg"
+            ],
+            captions: [
+                "Rooftop Solar Array at Kalaram Mandir, Nashik",
+                "Growatt Inverter & Distribution Setup for Hybrid System"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         },
         {
             id: "gov-3",
