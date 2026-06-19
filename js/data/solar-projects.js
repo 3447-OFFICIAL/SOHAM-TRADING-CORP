@@ -31,17 +31,35 @@ window.solarProjectsData = {
         },
         {
             id: "res-3",
-            name: "Luxury Township Solar",
-            capacity: "50 kWp",
-            location: "Thane, MH",
-            date: "June 2026",
-            client: "Grand Meadows Estates",
-            desc: "Smart grid-tied rooftop solar system for township clubhouses and streetlights.",
+            name: "Dr. Gunjal Residence",
+            capacity: "5 kWp",
+            location: "Nashik, Maharashtra",
+            client: "Dr. Gunjal",
+            desc: "5 kWp residential rooftop solar installation completed for Dr. Gunjal in Nashik under the PM Surya Ghar Government Subsidy Scheme. The system enables clean energy generation, reduced electricity bills, and long-term energy savings through efficient rooftop solar technology.",
+            projectType: "Residential Rooftop Solar Power Plant",
+            capacityHighlight: [
+                "5 KWP INSTALLED CAPACITY",
+                "<span class=\"desktop-text-badge\">PM SURYA GHAR SUBSIDY PROJECT</span><span class=\"mobile-text-badge\">GOVT. SUBSIDY PROJECT</span>"
+            ],
+            badges: [
+                "Residential Solar Project",
+                "5 kWp Installed Capacity",
+                "PM Surya Ghar Beneficiary",
+                "Government Subsidy Project",
+                "Grid Connected Solar System"
+            ],
             images: [
-                "images/solar-project.png",
-                "images/solar-project.png",
-                "images/solar-project.png"
-            ]
+                "images/gunjal-rooftop-1.jpg",
+                "images/gunjal-inverter.jpg",
+                "images/gunjal-rooftop-2.jpg"
+            ],
+            captions: [
+                "Rooftop Solar Panel Structure Setup – Dr. Gunjal Residence",
+                "Solar Yaan Inverter & AC/DC Protection Matrix Setup",
+                "Solar PV Modules Rooftop Overview"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         }
     ],
     industrial: [
@@ -97,15 +115,27 @@ window.solarProjectsData = {
         },
         {
             id: "ind-3",
-            name: "Factory Rooftop System",
-            capacity: "500 kWp",
-            location: "Nashik, MH",
-            date: "January 2026",
-            client: "Zenith Textiles Ltd",
-            desc: "Large scale rooftop installation utilizing zero-export devices.",
+            name: "Vinod Cookware",
+            capacity: "300 kWp",
+            location: "Palghar, Maharashtra",
+            client: "Vinod Cookware",
+            desc: "300 kWp industrial rooftop solar power plant installed for Vinod Cookware at Palghar, Maharashtra. The project helps reduce electricity costs, improve energy efficiency, and supports the company's sustainability initiatives through clean solar energy generation.",
+            projectType: "Industrial Rooftop Solar Power Plant",
+            capacityHighlight: "300 KWP INSTALLED CAPACITY",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/vinod-cookware-rooftop-1.jpg",
+                "images/vinod-cookware-inverter.jpg",
+                "images/vinod-cookware-rooftop-2.jpg",
+                "images/vinod-cookware-protection.jpg"
+            ],
+            captions: [
+                "Industrial Rooftop Solar Arrays at Vinod Cookware, Palghar",
+                "Growatt Inverters and AC/DC Distribution Panels",
+                "Wide overview of the Rooftop Solar PV Modules",
+                "Lightning Protection Mast & Structural Safety Infrastructure"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         }
     ],
     government: [

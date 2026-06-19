@@ -321,7 +321,13 @@ function renderSolarCategory(categoryName) {
 
         let badgesRightHTML = '';
         if (proj.capacityHighlight && proj.capacityHighlightPosition !== 'left') {
-            badgesRightHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${proj.capacityHighlight}</span>`;
+            if (Array.isArray(proj.capacityHighlight)) {
+                proj.capacityHighlight.forEach(hl => {
+                    badgesRightHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${hl}</span>`;
+                });
+            } else {
+                badgesRightHTML += `<span class="solar-subproject-cap-badge" style="position: static;">${proj.capacityHighlight}</span>`;
+            }
         }
 
         // Custom CTA button configuration

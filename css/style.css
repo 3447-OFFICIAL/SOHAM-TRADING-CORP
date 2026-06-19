@@ -2679,3 +2679,16 @@
           font-size: 0.9rem !important;
       }
   }
+
+  /* --- Responsive Badge Text Utilities --- */
+  .mobile-text-badge {
+      display: none;
+  }
+  @media (max-width: 576px) {
+      .desktop-text-badge {
+          display: none;
+      }
+      .mobile-text-badge {
+          display: inline;
+      }
+  }
