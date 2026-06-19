@@ -12,7 +12,6 @@ window.solarProjectsData = {
             category: "PM Surya Ghar Subsidy Project",
             capacityHighlight: "5 kWp Installed Capacity",
             badges: [
-                "Government Subsidy Project",
                 "PM Surya Ghar Beneficiary"
             ],
             bgSize: "contain",
@@ -37,16 +36,9 @@ window.solarProjectsData = {
             client: "Dr. Gunjal",
             desc: "5 kWp residential rooftop solar installation completed for Dr. Gunjal in Nashik under the PM Surya Ghar Government Subsidy Scheme. The system enables clean energy generation, reduced electricity bills, and long-term energy savings through efficient rooftop solar technology.",
             projectType: "Residential Rooftop Solar Power Plant",
-            capacityHighlight: [
-                "5 KWP INSTALLED CAPACITY",
-                "<span class=\"desktop-text-badge\">PM SURYA GHAR SUBSIDY PROJECT</span><span class=\"mobile-text-badge\">GOVT. SUBSIDY PROJECT</span>"
-            ],
+            capacityHighlight: "5 KWP INSTALLED CAPACITY",
             badges: [
-                "Residential Solar Project",
-                "5 kWp Installed Capacity",
-                "PM Surya Ghar Beneficiary",
-                "Government Subsidy Project",
-                "Grid Connected Solar System"
+                "PM Surya Ghar Beneficiary"
             ],
             images: [
                 "images/gunjal-rooftop-1.jpg",
@@ -176,8 +168,6 @@ window.solarProjectsData = {
             projectType: "Hybrid Solar Power System",
             capacityHighlight: "25 KWP HYBRID SOLAR SYSTEM",
             badges: [
-                "Hybrid Solar Project",
-                "Temple Solar Installation",
                 "10 kWp On-Grid System",
                 "15 kWp Off-Grid System"
             ],
@@ -194,15 +184,23 @@ window.solarProjectsData = {
         },
         {
             id: "gov-3",
-            name: "Educational Campus Solar",
-            capacity: "200 kWp",
-            location: "Nagpur, MH",
-            date: "October 2025",
-            client: "Government College of Engineering",
-            desc: "Sprawling educational institute solar grid featuring student monitoring modules.",
+            name: "Nashik Smart City Office",
+            capacity: "300 kWp",
+            location: "Nashik, Maharashtra",
+            client: "Nashik Smart City Office",
+            desc: "300 kWp rooftop solar power plant installed for Nashik Smart City Office. The project supports sustainable urban infrastructure through clean energy generation, reduced electricity consumption, and long-term environmental benefits.",
+            projectType: "Institutional Rooftop Solar Power Plant",
+            capacityHighlight: "300 KWP INSTALLED CAPACITY",
             images: [
-                "images/solar-project.png"
-            ]
+                "images/nashik-smart-city-rooftop.jpg",
+                "images/nashik-smart-city-inverter.jpg"
+            ],
+            captions: [
+                "300 kWp Institutional Rooftop Solar Plant – Nashik Smart City Office",
+                "Growatt Grid-Tied Inverter System & AC/DC Protection Matrix Setup"
+            ],
+            btnText: "View Project Gallery →",
+            action: "gallery"
         }
     ],
     megawatt: [

@@ -203,9 +203,9 @@ const serviceDetails = {
     },
     infra: {
         title: "Electrical Infrastructure Solutions",
-        desc: "Turnkey design and installation of HT/LT power distribution systems, high-tension cabling, and smart panel builds.",
-        themeColor: "linear-gradient(135deg, #ff7096, #00d2ff)",
-        themeTextColor: "#ff7096",
+        desc: "Comprehensive HT/LT electrical infrastructure solutions including distribution panels, industrial cabling, substations, power quality improvement, and turnkey electrical execution.",
+        themeColor: "linear-gradient(135deg, #00d2ff, #0055ff)",
+        themeTextColor: "#00d2ff",
         details: [
             { icon: "🏭", title: "HT / LT Panel Boards", desc: "Main power distribution boards, motor control centers, and smart APFC panels." },
             { icon: "🔌", title: "Cabling & Cable Trays", desc: "Heavy armored copper/aluminum cabling layouts, structural cable tray designs, and duct runs." },
