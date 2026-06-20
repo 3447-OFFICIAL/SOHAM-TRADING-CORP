@@ -259,7 +259,7 @@ window.solarProjectsData = {
             name: "XYZ Solar Park",
             capacity: "8 MWp",
             location: "Hiswal, Nashik",
-            client: "XYZ",
+            client: "Avada",
             desc: "8 MWp ground-mounted solar power plant developed at Hiswal. The project is designed for large-scale clean energy generation with high-performance solar modules, optimized plant design, and reliable long-term power production.",
             projectType: "Ground Mounted Solar Power Plant",
             capacityHighlight: "8 MWp Installed Capacity",
