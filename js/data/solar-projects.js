@@ -2,6 +2,32 @@
 window.solarProjectsData = {
     residential: [
         {
+            id: "res-1",
+            name: "Sai Pawan Apartment Solar Installation",
+            capacity: "8 kWp",
+            location: "Pathardi Phata, Nashik",
+            client: "Sai Pawan Apartment",
+            desc: "8 kWp residential rooftop solar installation completed for Sai Pawan Apartment at Pathardi Phata, Nashik. The system is designed to maximize solar generation, reduce common electricity expenses, and provide long-term energy savings through a reliable grid-connected solar solution.",
+            projectType: "Residential Rooftop Solar System",
+            capacityHighlight: "8 kWp Installed Capacity",
+            badges: [
+                "Residential Rooftop"
+            ],
+            bgSize: "contain",
+            images: [
+                "images/sai-pawan-rooftop-1.jpg",
+                "images/sai-pawan-rooftop-2.jpg",
+                "images/sai-pawan-inverter.jpg"
+            ],
+            captions: [
+                "Sai Pawan Apartment Rooftop Solar Installation – 8 kWp System",
+                "Rooftop Solar PV Array Layout – Nashik",
+                "Grid-Tied Inverter and Safety AC/DC Protection Setup"
+            ],
+            btnText: "View Project Gallery",
+            action: "gallery"
+        },
+        {
             id: "res-2",
             name: "R. D. Dhondgesir Residence",
             capacity: "5 kWp",
