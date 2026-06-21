@@ -1191,51 +1191,250 @@ function initTestimonials() {
 /* ==========================================
    8. Contact Inquiry Form & WhatsApp Actions
    ========================================== */
+// Analytics Tracking Helper
+const FormAnalytics = {
+    trackEvent(eventName, eventData = {}) {
+        const payload = {
+            event: eventName,
+            timestamp: new Date().toISOString(),
+            ...eventData
+        };
+        console.log(`[Analytics] Event Tracked:`, payload);
+        
+        // Dispatch custom DOM event for third-party scripts to catch
+        const customEvent = new CustomEvent(`analytics:${eventName}`, { detail: payload });
+        document.dispatchEvent(customEvent);
+    }
+};
+
+// Toast Notification System
+const FormToast = {
+    container: null,
+    
+    init() {
+        if (this.container) return;
+        this.container = document.createElement('div');
+        this.container.className = 'toast-container';
+        document.body.appendChild(this.container);
+    },
+    
+    show(message, type = 'success', duration = 5000) {
+        this.init();
+        
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        
+        const icon = type === 'success' ? '✔' : '✖';
+        
+        toast.innerHTML = `
+            <div class="toast-icon">${icon}</div>
+            <div class="toast-message">${message}</div>
+            <button type="button" class="toast-close" aria-label="Close message">×</button>
+        `;
+        
+        this.container.appendChild(toast);
+        
+        // Trigger reflow for slide animation
+        toast.offsetHeight;
+        toast.classList.add('show');
+        
+        const closeBtn = toast.querySelector('.toast-close');
+        
+        const dismissToast = () => {
+            toast.classList.remove('show');
+            toast.addEventListener('transitionend', () => {
+                toast.remove();
+            });
+        };
+        
+        closeBtn.addEventListener('click', dismissToast);
+        
+        if (duration > 0) {
+            setTimeout(dismissToast, duration);
+        }
+    }
+};
+
 function initContactForm() {
     const form = document.getElementById('inquiry-form');
     if (!form) return;
 
+    // Track Form View
+    FormAnalytics.trackEvent('form_view', { formId: form.id });
+
+    const fields = {
+        name: {
+            el: document.getElementById('form-name'),
+            errEl: document.getElementById('error-name'),
+            validate(val) {
+                if (!val) return 'Name is required.';
+                if (val.length < 2) return 'Name must be at least 2 characters.';
+                if (!/^[a-zA-Z\s\.\-]+$/.test(val)) return 'Name contains invalid characters.';
+                return null;
+            }
+        },
+        email: {
+            el: document.getElementById('form-email'),
+            errEl: document.getElementById('error-email'),
+            validate(val) {
+                if (!val) return 'Corporate email is required.';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(val)) return 'Please enter a valid email address.';
+                
+                // Enforce corporate business email (exclude free providers)
+                const publicProviders = [
+                    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
+                    'live.com', 'aol.com', 'icloud.com', 'proton.me', 
+                    'protonmail.com', 'zoho.com', 'yandex.com', 'mail.com', 
+                    'gmx.com', 'fastmail.com'
+                ];
+                const domain = val.split('@')[1]?.toLowerCase();
+                if (publicProviders.includes(domain)) {
+                    return 'Please provide a corporate/business email (free email providers are not accepted).';
+                }
+                return null;
+            }
+        },
+        phone: {
+            el: document.getElementById('form-phone'),
+            errEl: document.getElementById('error-phone'),
+            validate(val) {
+                if (!val) return 'Contact number is required.';
+                const phoneRegex = /^\+?[0-9\-\s\(\)]{10,18}$/;
+                if (!phoneRegex.test(val)) return 'Please enter a valid contact number.';
+                
+                const cleanVal = val.replace(/\s+/g, '');
+                const isIndianPattern = /^(\+91[\-\s]?)?[6-9]\d{9}$/.test(cleanVal);
+                const isIntlPattern = /^\+?[1-9]\d{1,14}$/.test(val.replace(/[\-\s\(\)\+]/g, ''));
+                
+                if (val.startsWith('+91') || cleanVal.length === 10) {
+                    if (!isIndianPattern) return 'Invalid Indian phone number. Must be 10 digits starting with 6-9.';
+                } else {
+                    if (!isIntlPattern) return 'Invalid international phone number format.';
+                }
+                return null;
+            }
+        },
+        service: {
+            el: document.getElementById('form-service'),
+            errEl: document.getElementById('error-service'),
+            validate(val) {
+                if (!val) return 'Please select a required service.';
+                return null;
+            }
+        },
+        message: {
+            el: document.getElementById('form-message'),
+            errEl: document.getElementById('error-message'),
+            validate(val) {
+                if (!val) return 'Project details are required.';
+                if (val.length < 15) return 'Message must be at least 15 characters to explain project parameters.';
+                return null;
+            }
+        }
+    };
+
+    function validateField(fieldName) {
+        const field = fields[fieldName];
+        const val = field.el.value.trim();
+        const errMsg = field.validate(val);
+        
+        if (errMsg) {
+            field.el.setAttribute('aria-invalid', 'true');
+            field.el.classList.add('aria-invalid-true');
+            field.errEl.textContent = errMsg;
+            field.errEl.style.display = 'block';
+            return false;
+        } else {
+            field.el.setAttribute('aria-invalid', 'false');
+            field.el.classList.remove('aria-invalid-true');
+            field.errEl.textContent = '';
+            field.errEl.style.display = 'none';
+            return true;
+        }
+    }
+
+    Object.keys(fields).forEach(key => {
+        fields[key].el.addEventListener('input', () => {
+            if (fields[key].el.getAttribute('aria-invalid') === 'true') {
+                validateField(key);
+            }
+        });
+        
+        if (key === 'service') {
+            fields[key].el.addEventListener('change', () => {
+                validateField(key);
+            });
+        }
+    });
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        
+        FormAnalytics.trackEvent('form_submit_attempt', { formId: form.id });
 
-        const name = document.getElementById('form-name').value.trim();
-        const email = document.getElementById('form-email').value.trim();
-        const phone = document.getElementById('form-phone').value.trim();
-        const service = document.getElementById('form-service').value;
-        const message = document.getElementById('form-message').value.trim();
+        let isFormValid = true;
+        Object.keys(fields).forEach(key => {
+            const isValid = validateField(key);
+            if (!isValid) isFormValid = false;
+        });
 
-        // Perform basic verification
-        if (!name || !email || !phone || !message) {
-            alert('Please fill out all required fields.');
+        if (!isFormValid) {
+            FormToast.show('Validation failed. Please correct the highlighted errors.', 'error');
+            FormAnalytics.trackEvent('form_submit_fail', { reason: 'validation_error' });
             return;
         }
 
-        // Simulating futuristic submission animation
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
+        const submitBtn = document.getElementById('submit-btn');
+        const submitBtnText = document.getElementById('submit-btn-text');
+        const submitBtnIcon = document.getElementById('submit-btn-icon');
+        const originalText = submitBtnText.textContent;
+        const originalIcon = submitBtnIcon.outerHTML;
+
         submitBtn.disabled = true;
-        submitBtn.innerHTML = `
-            <svg class="animate-spin" style="width:18px; height:18px; animation:spin 1s linear infinite;" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-opacity="0.3"></circle>
+        submitBtnText.textContent = 'Transmission in progress...';
+        submitBtnIcon.outerHTML = `
+            <svg id="submit-btn-icon" class="animate-spin" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-opacity="0.3"></circle>
                 <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
             </svg>
-            Transmission in progress...
         `;
 
-        setTimeout(() => {
-            // Visual success feedback
-            submitBtn.style.background = '#00f5d4';
-            submitBtn.style.color = '#020305';
-            submitBtn.innerHTML = '✔ Inquiry Received Successfully';
+        const formData = new FormData(form);
+        const encodedData = new URLSearchParams(formData).toString();
 
-            // Reset form after delay
-            setTimeout(() => {
-                form.reset();
-                submitBtn.disabled = false;
-                submitBtn.style.background = '';
-                submitBtn.style.color = '';
-                submitBtn.innerHTML = originalText;
-            }, 3000);
-        }, 1800);
+        fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodedData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response error during form submission');
+            }
+            
+            FormToast.show('Inquiry submitted successfully. Our team will contact you shortly.', 'success');
+            FormAnalytics.trackEvent('form_submit_success', { formId: form.id });
+            form.reset();
+            
+            Object.keys(fields).forEach(key => {
+                fields[key].el.setAttribute('aria-invalid', 'false');
+                fields[key].el.classList.remove('aria-invalid-true');
+            });
+        })
+        .catch(err => {
+            console.error('Submission error:', err);
+            FormToast.show('Transmission failed. Please check your connection and try again.', 'error');
+            FormAnalytics.trackEvent('form_submit_fail', { reason: 'network_error', error: err.message });
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtnText.textContent = originalText;
+            
+            const currentIcon = document.getElementById('submit-btn-icon');
+            if (currentIcon) {
+                currentIcon.outerHTML = originalIcon;
+            }
+        });
     });
 }
