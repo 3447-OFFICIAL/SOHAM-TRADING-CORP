@@ -1277,21 +1277,9 @@ function initContactForm() {
             el: document.getElementById('form-email'),
             errEl: document.getElementById('error-email'),
             validate(val) {
-                if (!val) return 'Corporate email is required.';
+                if (!val) return 'Please enter a valid email address.';
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(val)) return 'Please enter a valid email address.';
-                
-                // Enforce corporate business email (exclude free providers)
-                const publicProviders = [
-                    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 
-                    'live.com', 'aol.com', 'icloud.com', 'proton.me', 
-                    'protonmail.com', 'zoho.com', 'yandex.com', 'mail.com', 
-                    'gmx.com', 'fastmail.com'
-                ];
-                const domain = val.split('@')[1]?.toLowerCase();
-                if (publicProviders.includes(domain)) {
-                    return 'Please provide a corporate/business email (free email providers are not accepted).';
-                }
                 return null;
             }
         },
