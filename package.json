@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node -e \"const fs = require('fs'); fs.cpSync('images', 'public/images', { recursive: true });\"",
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest",
