@@ -12,7 +12,7 @@
     "test:e2e": "playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.61.1",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "netlify-cli": "^26.1.0",
